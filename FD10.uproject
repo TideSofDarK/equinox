@@ -29,7 +29,7 @@
 		},
 		{
 			"Name": "EasyMultiSave",
-			"Enabled": true,
+			"Enabled": false,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/7232621c23174bbbbb64c7bfb6583f6f"
 		}
 	]
