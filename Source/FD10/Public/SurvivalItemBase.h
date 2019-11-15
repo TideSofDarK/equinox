@@ -15,7 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	ASurvivalItemBase();
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Character")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Inventory")
 	void OnPicked();
 
 //protected:
