@@ -56,18 +56,21 @@ public:
 
 	UFDSaveGame();
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
+	FName MapName;
+
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TArray<FItemSaveData> InventoryItems;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TArray<FItemSaveData> StashItems;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	FDateTime Timestamp;
 
 	UFUNCTION(BlueprintCallable, Category = "Save Game")
-	static void SaveGame(TMap<FIntVector, AActor*> InventoryGrid, TMap<FIntVector, AActor*> StashGrid, int Slot);
+	static void SaveGame(const UObject * WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid, TMap<FIntVector, AActor*> StashGrid, int Slot);
 
 	UFUNCTION(BlueprintCallable, Category = "Save Game")
-	static void LoadGame(TMap<FIntVector, class ASurvivalItemBase*>& InventoryGrid, TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot);
+	static void LoadGame(const UObject * WorldContextObject, TMap<FIntVector, class ASurvivalItemBase*>& InventoryGrid, TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot);
 };
