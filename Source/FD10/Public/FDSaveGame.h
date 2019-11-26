@@ -16,6 +16,7 @@ struct FD10_API FSaveGameArchive : public FObjectAndNameAsStringProxyArchive
 		: FObjectAndNameAsStringProxyArchive(InInnerArchive, false)
 	{
 		ArIsSaveGame = true;
+		ArNoDelta = true;
 	}
 };
 
@@ -43,6 +44,18 @@ struct FItemSaveData : public FActorSaveData
 	FIntVector Slot;
 };
 
+USTRUCT()
+struct FMapSaveData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	TSet<FString> ActorsToDestroy;
+
+	UPROPERTY(VisibleAnywhere, Category = Basic)
+	TMap<FString, FActorSaveData> SavedActors;
+};
+
 /**
  * 
  */
@@ -60,6 +73,9 @@ public:
 	FName MapName;
 
 	UPROPERTY(VisibleAnywhere, Category = SaveGame)
+	TMap<FName, FMapSaveData> SavedMaps;
+
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TArray<FItemSaveData> InventoryItems;
 
 	UPROPERTY(VisibleAnywhere, Category = SaveGame)
@@ -69,7 +85,7 @@ public:
 	FDateTime Timestamp;
 
 	UFUNCTION(BlueprintCallable, Category = "Save Game")
-	static void SaveGame(const UObject * WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid, TMap<FIntVector, AActor*> StashGrid, int Slot);
+	static void SaveGame(const UObject * WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid, TMap<FIntVector, AActor*> StashGrid, TArray<FString> ActorsToDestroy, int Slot);
 
 	UFUNCTION(BlueprintCallable, Category = "Save Game")
 	static void LoadGame(const UObject * WorldContextObject, TMap<FIntVector, class ASurvivalItemBase*>& InventoryGrid, TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot);
