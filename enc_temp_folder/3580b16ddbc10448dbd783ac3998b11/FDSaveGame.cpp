@@ -241,7 +241,7 @@ void UFDSaveGame::LoadGame(const UObject * WorldContextObject, TMap<FIntVector, 
 
 		// Load inventory and stash
 
-		EquippedItem = LoadItemGrid(LoadedGameInstance->InventoryItems, InventoryGrid);
+		ASurvivalItemBase* EquippedItem = LoadItemGrid(LoadedGameInstance->InventoryItems, InventoryGrid);
 		LoadItemGrid(LoadedGameInstance->StashItems, StashGrid);
 	}
 }

@@ -15,6 +15,9 @@ public:
 	// Sets default values for this actor's properties
 	ASurvivalItemBase();
 
+	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, SaveGame, Category = "Inventory")
+	bool bIsEquipped;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Inventory")
 	void OnPicked();
 };

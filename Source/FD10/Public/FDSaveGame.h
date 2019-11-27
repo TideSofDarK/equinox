@@ -25,13 +25,13 @@ struct FActorSaveData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	FTransform ActorTransform;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	FString ActorClass;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TArray<uint8> ActorData;
 };
 
@@ -40,7 +40,7 @@ struct FItemSaveData : public FActorSaveData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	FIntVector Slot;
 };
 
@@ -49,10 +49,10 @@ struct FMapSaveData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TSet<FString> ActorsToDestroy;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	TMap<FString, FActorSaveData> SavedActors;
 };
 
@@ -68,6 +68,9 @@ public:
 	static const uint32 PersistentSlot = 0;
 
 	UFDSaveGame();
+
+	UPROPERTY(VisibleAnywhere, Category = SaveGame)
+	FActorSaveData PlayerCharacterSaveData;
 
 	UPROPERTY(VisibleAnywhere, Category = SaveGame)
 	FName MapName;
@@ -88,5 +91,5 @@ public:
 	static void SaveGame(const UObject * WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid, TMap<FIntVector, AActor*> StashGrid, TArray<FString> ActorsToDestroy, int Slot);
 
 	UFUNCTION(BlueprintCallable, Category = "Save Game")
-	static void LoadGame(const UObject * WorldContextObject, TMap<FIntVector, class ASurvivalItemBase*>& InventoryGrid, TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot);
+	static void LoadGame(const UObject * WorldContextObject, TMap<FIntVector, class ASurvivalItemBase*>& InventoryGrid, TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot, AActor* &EquippedItem);
 };
