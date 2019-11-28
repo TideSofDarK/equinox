@@ -2,6 +2,16 @@
 
 #include "GameplayUtilities.h"
 
+#if WITH_EDITOR
+#include "AssetRegistryModule.h"
+#include "AssetToolsModule.h"
+#include "IAssetTools.h"
+#include "IContentBrowserSingleton.h"
+#include "PackageTools.h"
+
+#define LOCTEXT_NAMESPACE "KismetRenderingLibrary"
+#endif
+
 UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, INT Width, INT Height, FIntVector Start, EDirection Direction)
 {
 	// UE_LOG(LogTemp, Warning, TEXT("Your message %s"), *Start.ToString());
@@ -20,7 +30,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 			{
 				if (Inventory.Find(Start) != nullptr && *Widget == *Inventory.Find(Start))
 				{
-					NewStartY = I+1;
+					NewStartY = I + 1;
 					continue;
 				}
 				else
@@ -67,7 +77,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 			{
 				if (Inventory.Find(Start) != nullptr && *Widget == *Inventory.Find(Start))
 				{
-					NewStartY = I-1;
+					NewStartY = I - 1;
 					continue;
 				}
 				else
@@ -332,4 +342,67 @@ bool UGameplayUtilities::Capture2D_Project(class ASceneCapture2D* Target, FVecto
 bool UGameplayUtilities::WasSpawnedInEditor(class AActor* Actor)
 {
 	return Actor->HasAnyFlags(RF_WasLoaded);
+}
+
+UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D* RenderTarget, FString InName)
+{
+#if WITH_EDITOR
+	if (RenderTarget && RenderTarget->Resource)
+	{
+		FString CurrentLevelPath = GWorld->GetCurrentLevel()->GetPathName();
+		CurrentLevelPath.RemoveFromEnd(TEXT(":PersistentLevel"));
+		CurrentLevelPath.RemoveFromEnd(GWorld->GetWorld()->GetName());
+		CurrentLevelPath.RemoveFromEnd(TEXT("."));
+		CurrentLevelPath.RemoveFromEnd(GWorld->GetWorld()->GetName());
+
+		CurrentLevelPath.Append(TEXT("T_"));
+		CurrentLevelPath.Append(GWorld->GetWorld()->GetName());
+		CurrentLevelPath.Append(TEXT("_Automap_"));
+		CurrentLevelPath.Append(InName);
+		CurrentLevelPath.Append(TEXT("_D"));
+
+		FString Name;
+		FString PackageName;
+		IAssetTools& AssetTools = FModuleManager::Get().LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+
+		// Remove existing
+		FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+		FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FName(*CurrentLevelPath));
+		UObject* AssetToDelete = AssetData.GetAsset();
+		if (IsValid(AssetToDelete))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("stuff: %s"), *AssetToDelete->GetName());
+			FAssetRegistryModule::AssetDeleted(AssetToDelete);
+			AssetToDelete->ClearFlags(RF_Standalone | RF_Public);
+			AssetToDelete->RemoveFromRoot();
+			AssetToDelete->MarkPendingKill();
+		}
+
+		CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
+
+		AssetTools.CreateUniqueAssetName(CurrentLevelPath, TEXT(""), PackageName, Name);
+		UTexture2D* NewTexture = NULL;
+		if (RenderTarget)
+		{
+			NewTexture = RenderTarget->ConstructTexture2D(CreatePackage(NULL, *PackageName), Name, RenderTarget->GetMaskedFlags() | RF_Public | RF_Standalone, CTF_Default, NULL);
+		}
+
+		if (NewTexture)
+		{
+			NewTexture->MarkPackageDirty();
+
+			FAssetRegistryModule::AssetCreated(NewTexture);
+
+			NewTexture->CompressionSettings = TextureCompressionSettings::TC_EditorIcon;
+			NewTexture->MipGenSettings = TextureMipGenSettings::TMGS_NoMipmaps;
+			NewTexture->Filter = TextureFilter::TF_Nearest;
+			NewTexture->SRGB = true;
+
+			NewTexture->PostEditChange();
+		}
+
+		return NewTexture;
+	}
+#endif
+	return nullptr;
 }
