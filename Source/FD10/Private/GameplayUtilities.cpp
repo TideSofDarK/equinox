@@ -12,7 +12,7 @@
 #define LOCTEXT_NAMESPACE "KismetRenderingLibrary"
 #endif
 
-UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, INT Width, INT Height, FIntVector Start, EDirection Direction)
+UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, int Width, int Height, FIntVector Start, EDirection Direction)
 {
 	// UE_LOG(LogTemp, Warning, TEXT("Your message %s"), *Start.ToString());
 	if (Direction == EDirection::E_DOWN)

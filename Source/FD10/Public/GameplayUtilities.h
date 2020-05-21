@@ -32,7 +32,7 @@ class FD10_API UGameplayUtilities : public UBlueprintFunctionLibrary
 public:
 
 	UFUNCTION(BlueprintCallable)
-	static UUserWidget* InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, INT Width, INT Height, FIntVector Start, EDirection Direction);
+	static UUserWidget* InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, int Width, int Height, FIntVector Start, EDirection Direction);
 
 	UFUNCTION(Category = "Victory BP Library|SceneCapture", BlueprintPure, Meta = (DefaultToSelf = "Target"))
 	static void CaptureComponent2D_DeProject(class USceneCaptureComponent2D* Target, const FVector2D& ScreenPos, FVector& OutWorldOrigin, FVector& OutWorldDirection);
