@@ -12,14 +12,14 @@
 #define LOCTEXT_NAMESPACE "KismetRenderingLibrary"
 #endif
 
-UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, INT Width, INT Height, FIntVector Start, EDirection Direction)
+UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, int Width, int Height, FIntVector Start, EDirection Direction)
 {
 	// UE_LOG(LogTemp, Warning, TEXT("Your message %s"), *Start.ToString());
 	if (Direction == EDirection::E_DOWN)
 	{
-		INT NewStartY = Start.Y + 1;
+		int NewStartY = Start.Y + 1;
 
-		for (INT I = NewStartY; I < Height; I++)
+		for (int I = NewStartY; I < Height; I++)
 		{
 			UUserWidget** Widget = Inventory.Find(FIntVector(Start.X, I, 0));
 			if (Widget == nullptr)
@@ -43,9 +43,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 		{
 			return nullptr;
 		}
-		for (INT Offset = 1; Offset < Width; Offset++)
+		for (int Offset = 1; Offset < Width; Offset++)
 		{
-			for (INT Y = NewStartY; Y < Height; Y++)
+			for (int Y = NewStartY; Y < Height; Y++)
 			{
 				UUserWidget** Widget = Inventory.Find(FIntVector(Start.X + Offset, Y, 0));
 				if (Widget != nullptr)
@@ -64,9 +64,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 
 	if (Direction == EDirection::E_UP)
 	{
-		INT NewStartY = Start.Y - 1;
+		int NewStartY = Start.Y - 1;
 
-		for (INT I = NewStartY; I >= 0; I--)
+		for (int I = NewStartY; I >= 0; I--)
 		{
 			UUserWidget** Widget = Inventory.Find(FIntVector(Start.X, I, 0));
 			if (Widget == nullptr)
@@ -90,9 +90,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 		{
 			return nullptr;
 		}
-		for (INT Offset = 1; Offset < Width; Offset++)
+		for (int Offset = 1; Offset < Width; Offset++)
 		{
-			for (INT Y = NewStartY; Y >= 0; Y--)
+			for (int Y = NewStartY; Y >= 0; Y--)
 			{
 				UUserWidget** Widget = Inventory.Find(FIntVector(Start.X + Offset, Y, 0));
 				if (Widget != nullptr)
@@ -111,9 +111,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 
 	if (Direction == EDirection::E_LEFT)
 	{
-		INT NewStartX = Start.X - 1;
+		int NewStartX = Start.X - 1;
 
-		for (INT I = NewStartX; I >= 0; I--)
+		for (int I = NewStartX; I >= 0; I--)
 		{
 			UUserWidget** Widget = Inventory.Find(FIntVector(I, Start.Y, 0));
 			if (Widget == nullptr)
@@ -136,9 +136,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 		{
 			return nullptr;
 		}
-		for (INT Offset = 1; Offset < Height; Offset++)
+		for (int Offset = 1; Offset < Height; Offset++)
 		{
-			for (INT X = NewStartX; X >= 0; X--)
+			for (int X = NewStartX; X >= 0; X--)
 			{
 				UUserWidget** Widget = Inventory.Find(FIntVector(X, Start.Y + Offset, 0));
 				if (Widget != nullptr)
@@ -157,9 +157,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 
 	if (Direction == EDirection::E_RIGHT)
 	{
-		INT NewStartX = Start.X + 1;
+		int NewStartX = Start.X + 1;
 
-		for (INT I = NewStartX; I < Width; I++)
+		for (int I = NewStartX; I < Width; I++)
 		{
 			UUserWidget** Widget = Inventory.Find(FIntVector(I, Start.Y, 0));
 			if (Widget == nullptr)
@@ -183,9 +183,9 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
 		{
 			return nullptr;
 		}
-		for (INT Offset = 1; Offset < Height; Offset++)
+		for (int Offset = 1; Offset < Height; Offset++)
 		{
-			for (INT X = NewStartX; X < Width; X++)
+			for (int X = NewStartX; X < Width; X++)
 			{
 				UUserWidget** Widget = Inventory.Find(FIntVector(X, Start.Y + Offset, 0));
 				if (Widget != nullptr)
