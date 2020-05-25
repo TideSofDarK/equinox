@@ -9,6 +9,8 @@ public class FD10Target : TargetRules
 	{
 		Type = TargetType.Game;
 
+		DefaultBuildSettings = BuildSettingsVersion.V2;
+
 		ExtraModuleNames.AddRange( new string[] { "FD10" } );
 	}
 }

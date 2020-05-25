@@ -8,6 +8,7 @@
 #include "IAssetTools.h"
 #include "IContentBrowserSingleton.h"
 #include "PackageTools.h"
+#include "ObjectTools.h"
 
 #define LOCTEXT_NAMESPACE "KismetRenderingLibrary"
 #endif
@@ -349,17 +350,19 @@ UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D
 #if WITH_EDITOR
 	if (RenderTarget && RenderTarget->Resource)
 	{
+		FString AutomapTextureAssetName;
+		AutomapTextureAssetName.Append(TEXT("T_"));
+		AutomapTextureAssetName.Append(GWorld->GetWorld()->GetName());
+		AutomapTextureAssetName.Append(TEXT("_Automap_"));
+		AutomapTextureAssetName.Append(InName);
+		AutomapTextureAssetName.Append(TEXT("_D"));
+
 		FString CurrentLevelPath = GWorld->GetCurrentLevel()->GetPathName();
 		CurrentLevelPath.RemoveFromEnd(TEXT(":PersistentLevel"));
 		CurrentLevelPath.RemoveFromEnd(GWorld->GetWorld()->GetName());
 		CurrentLevelPath.RemoveFromEnd(TEXT("."));
 		CurrentLevelPath.RemoveFromEnd(GWorld->GetWorld()->GetName());
-
-		CurrentLevelPath.Append(TEXT("T_"));
-		CurrentLevelPath.Append(GWorld->GetWorld()->GetName());
-		CurrentLevelPath.Append(TEXT("_Automap_"));
-		CurrentLevelPath.Append(InName);
-		CurrentLevelPath.Append(TEXT("_D"));
+		CurrentLevelPath.Append(AutomapTextureAssetName);
 
 		FString Name;
 		FString PackageName;
@@ -367,18 +370,18 @@ UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D
 
 		// Remove existing
 		FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-		FAssetData AssetData = AssetRegistryModule.Get().GetAssetByObjectPath(FName(*CurrentLevelPath));
-		UObject* AssetToDelete = AssetData.GetAsset();
-		if (IsValid(AssetToDelete))
+		TArray<FAssetData> AssetDatas;
+		TArray<UObject*> ObjectsToDelete;
+		AssetRegistryModule.Get().GetAssetsByPath(FName(*FPackageName::GetLongPackagePath(CurrentLevelPath)), AssetDatas);
+		for (auto& AD : AssetDatas)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("stuff: %s"), *AssetToDelete->GetName());
-			FAssetRegistryModule::AssetDeleted(AssetToDelete);
-			AssetToDelete->ClearFlags(RF_Standalone | RF_Public);
-			AssetToDelete->RemoveFromRoot();
-			AssetToDelete->MarkPendingKill();
+			if (AD.IsValid() && AD.GetAsset()->GetPathName().Contains(AutomapTextureAssetName))
+			{
+				ObjectsToDelete.Add(AD.GetAsset());
+			}
 		}
 
-		CollectGarbage(GARBAGE_COLLECTION_KEEPFLAGS);
+		ObjectTools::ForceDeleteObjects(ObjectsToDelete, false);
 
 		AssetTools.CreateUniqueAssetName(CurrentLevelPath, TEXT(""), PackageName, Name);
 		UTexture2D* NewTexture = NULL;

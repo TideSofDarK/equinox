@@ -9,6 +9,8 @@ public class FD10EditorTarget : TargetRules
 	{
 		Type = TargetType.Editor;
 
+		DefaultBuildSettings = BuildSettingsVersion.V2;
+
 		ExtraModuleNames.AddRange( new string[] { "FD10" } );
 	}
 }

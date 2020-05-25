@@ -166,7 +166,6 @@ void UFDSaveGame::SaveGame(const UObject * WorldContextObject, TMap<FIntVector, 
 
 		if (Slot == UFDSaveGame::PersistentSlot)
 		{
-			UFDGameInstance* FDGameInstance = Cast<UFDGameInstance>(UGameplayStatics::GetGameInstance(WorldContextObject));
 			if (UGameplayStatics::SaveGameToMemory(SaveGameInstance, FDGameInstance->PersistentSaveData))
 			{
 				
