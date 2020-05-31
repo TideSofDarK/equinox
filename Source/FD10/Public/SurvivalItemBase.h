@@ -9,15 +9,15 @@
 UCLASS()
 class FD10_API ASurvivalItemBase : public AActor
 {
-	GENERATED_BODY()
-	
-public:	
-	// Sets default values for this actor's properties
-	ASurvivalItemBase();
+    GENERATED_BODY()
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, SaveGame, Category = "Inventory")
-	bool bIsEquipped;
+public:
+    // Sets default values for this actor's properties
+    ASurvivalItemBase();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Inventory")
-	void OnPicked();
+    UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, SaveGame, Category = "Inventory")
+    bool bIsEquipped;
+
+    UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Inventory")
+    void OnPicked();
 };

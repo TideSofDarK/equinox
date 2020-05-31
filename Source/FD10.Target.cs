@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 public class FD10Target : TargetRules
 {
-	public FD10Target(TargetInfo Target) : base(Target)
-	{
-		Type = TargetType.Game;
+    public FD10Target(TargetInfo Target) : base(Target)
+    {
+        Type = TargetType.Game;
 
-		DefaultBuildSettings = BuildSettingsVersion.V2;
+        DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "FD10" } );
-	}
+        ExtraModuleNames.AddRange(new string[] {"FD10"});
+    }
 }

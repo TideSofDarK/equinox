@@ -12,8 +12,8 @@
 UCLASS()
 class FD10_API UFDGameInstance : public UGameInstance
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	TArray<uint8> PersistentSaveData;
+    TArray<uint8> PersistentSaveData;
 };

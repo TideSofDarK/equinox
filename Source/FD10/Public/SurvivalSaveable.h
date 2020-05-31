@@ -10,7 +10,7 @@
 UINTERFACE(MinimalAPI)
 class USurvivalSaveable : public UInterface
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 };
 
 /**
@@ -18,19 +18,19 @@ class USurvivalSaveable : public UInterface
  */
 class FD10_API ISurvivalSaveable
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
+    // Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
-	void OnActorPreSave();
+    UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
+    void OnActorPreSave();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
-	void OnActorPostSave();
+    UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
+    void OnActorPostSave();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
-	void OnActorPreLoad();
+    UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
+    void OnActorPreLoad();
 
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
-	void OnActorPostLoad();
+    UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "SaveGame")
+    void OnActorPostLoad();
 };

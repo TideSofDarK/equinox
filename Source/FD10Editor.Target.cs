@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 public class FD10EditorTarget : TargetRules
 {
-	public FD10EditorTarget(TargetInfo Target) : base(Target)
-	{
-		Type = TargetType.Editor;
+    public FD10EditorTarget(TargetInfo Target) : base(Target)
+    {
+        Type = TargetType.Editor;
 
-		DefaultBuildSettings = BuildSettingsVersion.V2;
+        DefaultBuildSettings = BuildSettingsVersion.V2;
 
-		ExtraModuleNames.AddRange( new string[] { "FD10" } );
-	}
+        ExtraModuleNames.AddRange(new string[] {"FD10"});
+    }
 }

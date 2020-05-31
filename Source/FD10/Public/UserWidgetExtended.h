@@ -14,11 +14,12 @@ DECLARE_DYNAMIC_DELEGATE(FOnInputAxis);
 UCLASS()
 class FD10_API UUserWidgetExtended : public UUserWidget
 {
-	GENERATED_BODY()
-	
+    GENERATED_BODY()
+
 
 public:
 
-	UFUNCTION(BlueprintCallable, Category = "Input", meta = (BlueprintProtected = "true"))
-	void ListenForInputActionExtended(FName ActionName, TEnumAsByte< EInputEvent > EventType, bool bConsume, bool bExecuteWhenPaused, FOnInputAction Callback);
+    UFUNCTION(BlueprintCallable, Category = "Input", meta = (BlueprintProtected = "true"))
+    void ListenForInputActionExtended(FName ActionName, TEnumAsByte<EInputEvent> EventType, bool bConsume,
+                                      bool bExecuteWhenPaused, FOnInputAction Callback);
 };

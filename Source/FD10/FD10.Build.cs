@@ -8,7 +8,8 @@ public class FD10 : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PrivateDependencyModuleNames.AddRange(new string[] {
+        PrivateDependencyModuleNames.AddRange(new string[]
+        {
             "Core",
             "CoreUObject",
             "Engine",
@@ -17,6 +18,7 @@ public class FD10 : ModuleRules
             "Slate",
             "SlateCore",
             "RHI",
-            "UnrealEd" });
+            "UnrealEd"
+        });
     }
 }

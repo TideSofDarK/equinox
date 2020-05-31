@@ -4,10 +4,10 @@
 
 void ASurvivalPlayerController::HideActor(AActor* Actor)
 {
-	HiddenActors.Add(Actor);
+    HiddenActors.Add(Actor);
 }
 
 void ASurvivalPlayerController::ShowActor(AActor* Actor)
 {
-	HiddenActors.Remove(Actor);
+    HiddenActors.Remove(Actor);
 }

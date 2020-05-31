@@ -217,6 +217,10 @@
 		{
 			"Name": "MobileLauncherProfileWizard",
 			"Enabled": false
+		},
+		{
+			"Name": "RiderLink",
+			"Enabled": true
 		}
 	]
 }

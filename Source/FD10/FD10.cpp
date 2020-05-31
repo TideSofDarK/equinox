@@ -3,4 +3,4 @@
 #include "FD10.h"
 #include "Modules/ModuleManager.h"
 
-IMPLEMENT_PRIMARY_GAME_MODULE( FDefaultGameModuleImpl, FD10, "FD10" );
+IMPLEMENT_PRIMARY_GAME_MODULE(FDefaultGameModuleImpl, FD10, "FD10");

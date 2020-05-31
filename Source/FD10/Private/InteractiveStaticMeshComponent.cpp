@@ -3,17 +3,17 @@
 #include "InteractiveStaticMeshComponent.h"
 
 UInteractiveStaticMeshComponent::UInteractiveStaticMeshComponent(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
+    : Super(ObjectInitializer)
 {
-	SetCollisionProfileName(TEXT("Survival_InteractiveScene"));
+    SetCollisionProfileName(TEXT("Survival_InteractiveScene"));
 }
 
 void UInteractiveStaticMeshComponent::DispatchOnClickedBlueprint(FKey ButtonClicked)
 {
-	DispatchOnClicked();
+    DispatchOnClicked();
 }
 
 void UInteractiveStaticMeshComponent::DispatchOnReleasedBlueprint(FKey ButtonClicked)
 {
-	DispatchOnReleased();
+    DispatchOnReleased();
 }

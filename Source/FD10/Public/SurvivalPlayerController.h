@@ -12,13 +12,13 @@
 UCLASS()
 class FD10_API ASurvivalPlayerController : public APlayerController
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
 
-	UFUNCTION(BlueprintCallable)
-	void HideActor(AActor* Actor);
+    UFUNCTION(BlueprintCallable)
+    void HideActor(AActor* Actor);
 
-	UFUNCTION(BlueprintCallable)
-	void ShowActor(AActor* Actor);
+    UFUNCTION(BlueprintCallable)
+    void ShowActor(AActor* Actor);
 };

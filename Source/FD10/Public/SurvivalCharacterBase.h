@@ -9,38 +9,39 @@
 UCLASS()
 class FD10_API ASurvivalCharacterBase : public ACharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	ASurvivalCharacterBase();
+    // Sets default values for this character's properties
+    ASurvivalCharacterBase();
 
-	UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, SaveGame, Category = "Character")
-	bool bIsDead;
+    UPROPERTY(VisibleInstanceOnly, BlueprintReadWrite, SaveGame, Category = "Character")
+    bool bIsDead;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, SaveGame, Category = "Character")
-	float Health = 100.0f;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, SaveGame, Category = "Character")
+    float Health = 100.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Interp, Category = "Character")
-	float CutsceneSlotAlpha = 0.0f;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Interp, Category = "Character")
+    float CutsceneSlotAlpha = 0.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Character")
-	FName RootBoneName;
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Character")
+    FName RootBoneName;
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
 
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
+    virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+                             class AController* EventInstigator, AActor* DamageCauser) override;
 
-public:	
+public:
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    // Called to bind functionality to input
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Character")
-	void ProcessDamage(float DamageAmount);
+    UFUNCTION(BlueprintNativeEvent, Category = "Character")
+    void ProcessDamage(float DamageAmount);
 
-	UFUNCTION(BlueprintNativeEvent, Category = "Character")
-	void Die();
+    UFUNCTION(BlueprintNativeEvent, Category = "Character")
+    void Die();
 };

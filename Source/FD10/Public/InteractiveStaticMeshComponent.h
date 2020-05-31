@@ -12,18 +12,18 @@
 UCLASS(ClassGroup = Rendering, meta = (BlueprintSpawnableComponent), Blueprintable)
 class FD10_API UInteractiveStaticMeshComponent : public UStaticMeshComponent
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
-	UInteractiveStaticMeshComponent(const FObjectInitializer& ObjectInitializer);
+    UInteractiveStaticMeshComponent(const FObjectInitializer& ObjectInitializer);
 
 public:
 
-	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
-	bool bCanBeClicked;
+    UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+    bool bCanBeClicked;
 
-	UFUNCTION(BlueprintCallable)
-	void DispatchOnClickedBlueprint(FKey ButtonClicked);
+    UFUNCTION(BlueprintCallable)
+    void DispatchOnClickedBlueprint(FKey ButtonClicked);
 
-	UFUNCTION(BlueprintCallable)
-	void DispatchOnReleasedBlueprint(FKey ButtonClicked);
+    UFUNCTION(BlueprintCallable)
+    void DispatchOnReleasedBlueprint(FKey ButtonClicked);
 };
