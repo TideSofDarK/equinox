@@ -34,10 +34,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
                     NewStartY = I + 1;
                     continue;
                 }
-                else
-                {
-                    return *Widget;
-                }
+                return *Widget;
             }
         }
         if (NewStartY >= Height)
@@ -80,10 +77,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
                     NewStartY = I - 1;
                     continue;
                 }
-                else
-                {
-                    return *Widget;
-                }
+                return *Widget;
             }
         }
         if (NewStartY < 0)
@@ -126,10 +120,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
                     NewStartX = I - 1;
                     continue;
                 }
-                else
-                {
-                    return *Widget;
-                }
+                return *Widget;
             }
         }
         if (NewStartX < 0)
@@ -172,10 +163,7 @@ UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*
                     NewStartX = I + 1;
                     continue;
                 }
-                else
-                {
-                    return *Widget;
-                }
+                return *Widget;
             }
         }
         if (NewStartX >= Width)
@@ -224,7 +212,7 @@ void UGameplayUtilities::CaptureComponent2D_DeProject(class USceneCaptureCompone
         FPlane(0, 1, 0, 0),
         FPlane(0, 0, 0, 1));
 
-    const float FOV = Target->FOVAngle * (float)PI / 360.0f;
+    const float FOV = Target->FOVAngle * static_cast<float>(PI) / 360.0f;
 
     FIntPoint CaptureSize(Target->TextureTarget->GetSurfaceWidth(), Target->TextureTarget->GetSurfaceHeight());
 
@@ -235,12 +223,12 @@ void UGameplayUtilities::CaptureComponent2D_DeProject(class USceneCaptureCompone
     {
         // if the viewport is wider than it is tall
         XAxisMultiplier = 1.0f;
-        YAxisMultiplier = CaptureSize.X / (float)CaptureSize.Y;
+        YAxisMultiplier = CaptureSize.X / static_cast<float>(CaptureSize.Y);
     }
     else
     {
         // if the viewport is taller than it is wide
-        XAxisMultiplier = CaptureSize.Y / (float)CaptureSize.X;
+        XAxisMultiplier = CaptureSize.Y / static_cast<float>(CaptureSize.X);
         YAxisMultiplier = 1.0f;
     }
 
@@ -290,7 +278,7 @@ bool UGameplayUtilities::CaptureComponent2D_Project(class USceneCaptureComponent
         FPlane(0, 1, 0, 0),
         FPlane(0, 0, 0, 1));
 
-    const float FOV = Target->FOVAngle * (float)PI / 360.0f;
+    const float FOV = Target->FOVAngle * static_cast<float>(PI) / 360.0f;
 
     FIntPoint CaptureSize(Target->TextureTarget->GetSurfaceWidth(), Target->TextureTarget->GetSurfaceHeight());
 
@@ -301,12 +289,12 @@ bool UGameplayUtilities::CaptureComponent2D_Project(class USceneCaptureComponent
     {
         // if the viewport is wider than it is tall
         XAxisMultiplier = 1.0f;
-        YAxisMultiplier = CaptureSize.X / (float)CaptureSize.Y;
+        YAxisMultiplier = CaptureSize.X / static_cast<float>(CaptureSize.Y);
     }
     else
     {
         // if the viewport is taller than it is wide
-        XAxisMultiplier = CaptureSize.Y / (float)CaptureSize.X;
+        XAxisMultiplier = CaptureSize.Y / static_cast<float>(CaptureSize.X);
         YAxisMultiplier = 1.0f;
     }
 
@@ -389,12 +377,12 @@ UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D
         ObjectTools::ForceDeleteObjects(ObjectsToDelete, false);
 
         AssetTools.CreateUniqueAssetName(CurrentLevelPath, TEXT(""), PackageName, Name);
-        UTexture2D* NewTexture = NULL;
+        UTexture2D* NewTexture = nullptr;
         if (RenderTarget)
         {
-            NewTexture = RenderTarget->ConstructTexture2D(CreatePackage(NULL, *PackageName), Name,
+            NewTexture = RenderTarget->ConstructTexture2D(CreatePackage(nullptr, *PackageName), Name,
                                                           RenderTarget->GetMaskedFlags() | RF_Public | RF_Standalone,
-                                                          CTF_Default, NULL);
+                                                          CTF_Default, nullptr);
         }
 
         if (NewTexture)
@@ -403,9 +391,9 @@ UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D
 
             FAssetRegistryModule::AssetCreated(NewTexture);
 
-            NewTexture->CompressionSettings = TextureCompressionSettings::TC_EditorIcon;
-            NewTexture->MipGenSettings = TextureMipGenSettings::TMGS_NoMipmaps;
-            NewTexture->Filter = TextureFilter::TF_Nearest;
+            NewTexture->CompressionSettings = TC_EditorIcon;
+            NewTexture->MipGenSettings = TMGS_NoMipmaps;
+            NewTexture->Filter = TF_Nearest;
             NewTexture->SRGB = true;
 
             NewTexture->PostEditChange();

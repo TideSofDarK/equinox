@@ -29,15 +29,15 @@ public:
 
 protected:
     // Called when the game starts or when spawned
-    virtual void BeginPlay() override;
+    void BeginPlay() override;
 
-    virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
-                             class AController* EventInstigator, AActor* DamageCauser) override;
+    float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent,
+                     class AController* EventInstigator, AActor* DamageCauser) override;
 
 public:
 
     // Called to bind functionality to input
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
     UFUNCTION(BlueprintNativeEvent, Category = "Character")
     void ProcessDamage(float DamageAmount);

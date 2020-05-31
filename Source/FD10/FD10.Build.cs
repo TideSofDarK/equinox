@@ -8,7 +8,7 @@ public class FD10 : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PrivateDependencyModuleNames.AddRange(new string[]
+        PrivateDependencyModuleNames.AddRange(new[]
         {
             "Core",
             "CoreUObject",

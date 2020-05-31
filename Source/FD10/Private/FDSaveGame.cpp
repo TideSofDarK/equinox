@@ -102,7 +102,7 @@ UFDSaveGame::UFDSaveGame()
 {
 }
 
-void UFDSaveGame::SaveGame(const ::UObject* WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid,
+void UFDSaveGame::SaveGame(const UObject* WorldContextObject, TMap<FIntVector, AActor*> InventoryGrid,
                            TMap<FIntVector, AActor*> StashGrid, TArray
                            <FString> ActorsToDestroy, int Slot, USceneCaptureComponent2D* SceneCaptureComponent2D)
 {
@@ -113,7 +113,7 @@ void UFDSaveGame::SaveGame(const ::UObject* WorldContextObject, TMap<FIntVector,
     UFDSaveGame* SaveGameInstance = IsValid(LoadedGameInstance)
                                         ? LoadedGameInstance
                                         : Cast<UFDSaveGame>(
-                                            UGameplayStatics::CreateSaveGameObject(UFDSaveGame::StaticClass()));
+                                            UGameplayStatics::CreateSaveGameObject(StaticClass()));
     SaveGameInstance->Timestamp = FDateTime::Now();
 
     if (SaveGameInstance)
@@ -124,7 +124,8 @@ void UFDSaveGame::SaveGame(const ::UObject* WorldContextObject, TMap<FIntVector,
         if (SceneCaptureComponent2D != nullptr)
         {
             UTexture2D* ScreenshotTexture = SceneCaptureComponent2D->TextureTarget->ConstructTexture2D(
-                SaveGameInstance, FString("Screenshot"), EObjectFlags::RF_NoFlags);
+                SaveGameInstance, FString("Screenshot"),
+                RF_NoFlags);
             ScreenshotTexture->CompressionSettings = TC_VectorDisplacementmap;
             ScreenshotTexture->MipGenSettings = TMGS_NoMipmaps;
             ScreenshotTexture->SRGB = false;
@@ -196,7 +197,7 @@ void UFDSaveGame::SaveGame(const ::UObject* WorldContextObject, TMap<FIntVector,
 
         // Write data to memory or disk
 
-        if (Slot == UFDSaveGame::PersistentSlot)
+        if (Slot == PersistentSlot)
         {
             if (UGameplayStatics::SaveGameToMemory(SaveGameInstance, FDGameInstance->PersistentSaveData))
             {
@@ -212,7 +213,7 @@ void UFDSaveGame::LoadGame(const UObject* WorldContextObject, TMap<FIntVector, A
                            TMap<FIntVector, ASurvivalItemBase*>& StashGrid, int Slot, AActor* & EquippedItem)
 {
     UFDSaveGame* LoadedGameInstance = nullptr;
-    const bool bIsPersistentSlot = Slot == UFDSaveGame::PersistentSlot;
+    const bool bIsPersistentSlot = Slot == PersistentSlot;
 
     if (bIsPersistentSlot)
     {
@@ -283,7 +284,7 @@ bool UFDSaveGame::LoadGamePreview(const UObject* WorldContextObject, int Slot, U
                                   FName& MapNameOut, FDateTime& TimestampOut, float& ProgressOut)
 {
     UFDSaveGame* LoadedGameInstance = nullptr;
-    const bool bIsPersistentSlot = Slot == UFDSaveGame::PersistentSlot;
+    const bool bIsPersistentSlot = Slot == PersistentSlot;
 
     if (bIsPersistentSlot)
     {
