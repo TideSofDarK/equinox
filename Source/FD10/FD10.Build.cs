@@ -17,8 +17,16 @@ public class FD10 : ModuleRules
             "UMG",
             "Slate",
             "SlateCore",
-            "RHI",
-            "UnrealEd"
+            "RHI"
         });
+        
+        if (Target.bBuildEditor)
+        {
+            PrivateDependencyModuleNames.AddRange(
+                new [] {
+                    "UnrealEd"
+                }
+            );
+        }
     }
 }

@@ -123,27 +123,8 @@ void UFDSaveGame::SaveGame(const UObject* WorldContextObject, TMap<FIntVector, A
         // Save screenshot if available
         if (SceneCaptureComponent2D != nullptr)
         {
-            UTexture2D* ScreenshotTexture = SceneCaptureComponent2D->TextureTarget->ConstructTexture2D(
-                SaveGameInstance, FString("Screenshot"),
-                RF_NoFlags);
-            ScreenshotTexture->CompressionSettings = TC_VectorDisplacementmap;
-            ScreenshotTexture->MipGenSettings = TMGS_NoMipmaps;
-            ScreenshotTexture->SRGB = false;
-            ScreenshotTexture->UpdateResource();
-
-            const FColor* FormattedImageData = StaticCast<const FColor*>(
-                ScreenshotTexture->PlatformData->Mips[0].BulkData.LockReadOnly());
-
-            for (int32 X = 0; X < 256; X++)
-            {
-                for (int32 Y = 0; Y < 256; Y++)
-                {
-                    FColor Color = FormattedImageData[X * 256 + Y];
-                    SaveGameInstance->ScreenshotData.Add(Color);
-                }
-            }
-
-            ScreenshotTexture->PlatformData->Mips[0].BulkData.Unlock();
+            FRenderTarget* RenderTarget = SceneCaptureComponent2D->TextureTarget->GameThread_GetRenderTargetResource();
+            RenderTarget->ReadPixels(SaveGameInstance->ScreenshotData);
         }
 
         SaveGameInstance->MapName = FName(*WorldContextObject->GetWorld()->GetName());
@@ -280,7 +261,7 @@ void UFDSaveGame::LoadGame(const UObject* WorldContextObject, TMap<FIntVector, A
     }
 }
 
-bool UFDSaveGame::LoadGamePreview(const UObject* WorldContextObject, int Slot, UTexture2D* & ScreenshotTextureOut,
+bool UFDSaveGame::LoadGamePreview(const UObject* WorldContextObject, const int Slot, UTexture2D* ScreenshotTexture,
                                   FName& MapNameOut, FDateTime& TimestampOut, float& ProgressOut)
 {
     UFDSaveGame* LoadedGameInstance = nullptr;
@@ -299,16 +280,11 @@ bool UFDSaveGame::LoadGamePreview(const UObject* WorldContextObject, int Slot, U
 
     if (!IsValid(LoadedGameInstance)) return false;
 
-    ScreenshotTextureOut = UTexture2D::CreateTransient(256, 256, PF_B8G8R8A8);
-    ScreenshotTextureOut->CompressionSettings = TC_VectorDisplacementmap;
-    ScreenshotTextureOut->MipGenSettings = TMGS_NoMipmaps;
-    ScreenshotTextureOut->SRGB = false;
-    ScreenshotTextureOut->UpdateResource();
-    FTexture2DMipMap& Mip = ScreenshotTextureOut->PlatformData->Mips[0];
+    FTexture2DMipMap& Mip = ScreenshotTexture->PlatformData->Mips[0];
     void* Data = Mip.BulkData.Lock(LOCK_READ_WRITE);
     FMemory::Memcpy(Data, LoadedGameInstance->ScreenshotData.GetData(), 256 * 256 * 4);
     Mip.BulkData.Unlock();
-    ScreenshotTextureOut->UpdateResource();
+    ScreenshotTexture->UpdateResource();
 
     MapNameOut = LoadedGameInstance->MapName;
     TimestampOut = LoadedGameInstance->Timestamp;

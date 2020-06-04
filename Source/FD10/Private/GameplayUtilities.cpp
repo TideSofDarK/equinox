@@ -7,10 +7,7 @@
 #include "AssetToolsModule.h"
 #include "IAssetTools.h"
 #include "IContentBrowserSingleton.h"
-#include "PackageTools.h"
 #include "ObjectTools.h"
-
-#define LOCTEXT_NAMESPACE "KismetRenderingLibrary"
 #endif
 
 UUserWidget* UGameplayUtilities::InventoryNextItem(TMap<FIntVector, UUserWidget*> Inventory, int Width, int Height,
@@ -336,9 +333,9 @@ bool UGameplayUtilities::WasSpawnedInEditor(class AActor* Actor)
     return Actor->HasAnyFlags(RF_WasLoaded);
 }
 
+#if WITH_EDITOR
 UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D* RenderTarget, FString InName)
 {
-#if WITH_EDITOR
     if (RenderTarget && RenderTarget->Resource)
     {
         FString AutomapTextureAssetName;
@@ -401,6 +398,6 @@ UTexture2D* UGameplayUtilities::CreateAutomapTextureAsset(UTextureRenderTarget2D
 
         return NewTexture;
     }
-#endif
     return nullptr;
 }
+#endif

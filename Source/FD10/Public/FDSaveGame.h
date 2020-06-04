@@ -103,6 +103,6 @@ public:
                          TMap<FIntVector, class ASurvivalItemBase*>& StashGrid, int Slot, AActor* & EquippedItem);
 
     UFUNCTION(BlueprintCallable, Category = "Save Game")
-    static bool LoadGamePreview(const UObject* WorldContextObject, int Slot, UTexture2D* & ScreenshotTextureOut,
+    static bool LoadGamePreview(const UObject* WorldContextObject, int Slot, UTexture2D* ScreenshotTexture,
                                 FName& MapNameOut, FDateTime& TimestampOut, float& ProgressOut);
 };

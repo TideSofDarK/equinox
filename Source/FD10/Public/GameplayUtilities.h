@@ -52,7 +52,9 @@ public:
 
     UFUNCTION(BlueprintPure)
     static bool WasSpawnedInEditor(class AActor* Actor);
-
+    
+#if WITH_EDITOR
     UFUNCTION(BlueprintCallable, meta = (UnsafeDuringActorConstruction = "true"), Category = Automap)
     static UTexture2D* CreateAutomapTextureAsset(UTextureRenderTarget2D* RenderTarget, FString Name = "Texture");
+#endif
 };

@@ -20,3 +20,12 @@ void UUserWidgetExtended::ListenForInputActionExtended(FName ActionName, TEnumAs
         InputComponent->AddActionBinding(NewBinding);
     }
 }
+
+UTexture2D* UUserWidgetExtended::CreateTransientTexture2D(const int Width, const int Height)
+{
+    UTexture2D* NewTexture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
+    NewTexture->CompressionSettings = TC_VectorDisplacementmap;
+    NewTexture->SRGB = false;
+    NewTexture->UpdateResource();
+    return NewTexture;
+}

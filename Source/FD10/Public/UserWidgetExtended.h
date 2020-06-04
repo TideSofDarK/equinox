@@ -22,4 +22,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Input", meta = (BlueprintProtected = "true"))
     void ListenForInputActionExtended(FName ActionName, TEnumAsByte<EInputEvent> EventType, bool bConsume,
                                       bool bExecuteWhenPaused, FOnInputAction Callback);
+
+    UFUNCTION(BlueprintCallable, Category = "Rendering", meta = (BlueprintProtected = "true"))
+    static UTexture2D* CreateTransientTexture2D(int Width, int Height);
 };
